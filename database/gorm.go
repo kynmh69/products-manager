@@ -8,12 +8,18 @@ import (
 	"gorm.io/gorm"
 )
 
+var db *gorm.DB
+
+func init() {
+	NewGorm()
+}
+
 func NewGorm() *gorm.DB {
+	if db != nil {
+		return db
+	}
 	config := configs.NewMySQLConfig()
-	var (
-		db  *gorm.DB
-		err error
-	)
+	var err error
 
 	if db, err = gorm.Open(mysql.Open(config.FormatDSN()), &gorm.Config{}); err != nil {
 		log.Fatalln(err)

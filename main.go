@@ -1,17 +1,18 @@
 package main
 
 import (
-	"net/http"
+	"log"
 
-	"github.com/gin-gonic/gin"
+	"github.com/kynmh69/products-manager/database"
+	"github.com/kynmh69/products-manager/internal/app/router"
+	"github.com/kynmh69/products-manager/internal/domain"
 )
 
 func main() {
-	r := gin.Default()
-
-	r.GET("/ping", func(ctx *gin.Context) {
-		ctx.String(http.StatusOK, "pong")
-	})
-
-	r.Run()
+	db := database.NewGorm()
+	if err := db.AutoMigrate(&domain.Products{}, &domain.Inventory{}); err != nil {
+		log.Fatalln(err)
+	}
+	r := router.NewRouter()
+	r.Engine.Run()
 }
