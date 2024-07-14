@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/kynmh69/products-manager/configs"
+	"github.com/kynmh69/products-manager/logging"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -11,10 +12,12 @@ import (
 var db *gorm.DB
 
 func init() {
+	logging.NewLogger()
 	NewGorm()
 }
 
 func NewGorm() *gorm.DB {
+	suger := logging.NewLogger()
 	if db != nil {
 		return db
 	}
@@ -23,6 +26,6 @@ func NewGorm() *gorm.DB {
 	if db, err = gorm.Open(mysql.Open(config.FormatDSN()), &gorm.Config{}); err != nil {
 		log.Fatalln(err)
 	}
-	log.Println("Connected db.")
+	suger.Infoln("Connected db.")
 	return db
 }

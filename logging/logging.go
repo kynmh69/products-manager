@@ -8,7 +8,7 @@ func NewLogger() *zap.SugaredLogger {
 	if sugar != nil {
 		return sugar
 	}
-	logger, _ := zap.NewProduction()
+	logger, _ := zap.NewDevelopment()
 	sugar = logger.Sugar()
 	return sugar
 }
