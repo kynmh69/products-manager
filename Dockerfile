@@ -11,6 +11,8 @@ RUN --mount=type=cache,target=/go/pkg/mod/ \
 
 ARG TARGETARCH
 
+COPY ./ ./
+
 RUN go install github.com/air-verse/air@latest
 
 CMD [ "air", "-c", ".air.toml" ]

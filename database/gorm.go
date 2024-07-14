@@ -24,5 +24,6 @@ func NewGorm() *gorm.DB {
 	if db, err = gorm.Open(mysql.Open(config.FormatDSN()), &gorm.Config{}); err != nil {
 		log.Fatalln(err)
 	}
+	log.Println("Connected db.")
 	return db
 }
