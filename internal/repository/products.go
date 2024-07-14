@@ -1,6 +1,8 @@
 package repository
 
 import (
+	"github.com/kynmh69/products-manager/consts"
+	"github.com/kynmh69/products-manager/env"
 	"github.com/kynmh69/products-manager/internal/domain"
 	"gorm.io/gorm"
 )
@@ -14,7 +16,13 @@ func NewProductRepository(db *gorm.DB) *productRepository {
 }
 
 func (p *productRepository) CreateProduct(product *domain.Products) error {
-	result := p.db.Create(product)
+	var result *gorm.DB
+	if env.GetGinMode() == consts.PRODUCTION {
+		result = p.db.Create(product)
+	} else {
+		result = p.db.Debug().Create(product)
+	}
+	
 	if result.Error != nil {
 		return result.Error
 	}
@@ -23,7 +31,11 @@ func (p *productRepository) CreateProduct(product *domain.Products) error {
 
 func (p *productRepository) GetAllProducts() ([]*domain.Products, error) {
 	var products []*domain.Products
-	if result := p.db.Find(&products); result.Error != nil {
+	db := p.db.Debug()
+	if env.GetGinMode() == consts.PRODUCTION {
+		db = p.db
+	}
+	if result := db.Find(&products); result.Error != nil {
 		return nil, result.Error
 	}
 	return products, nil
