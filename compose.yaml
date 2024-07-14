@@ -16,6 +16,8 @@ services:
       - 8080:8080
     env_file:
       - .env.local
+    volumes:
+      - ./:/src:rw
     depends_on:
       db:
         condition: service_healthy

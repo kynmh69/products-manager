@@ -23,7 +23,7 @@ func (p *productRepository) CreateProduct(product *domain.Products) error {
 
 func (p *productRepository) GetAllProducts() ([]*domain.Products, error) {
 	var products []*domain.Products
-	if result := p.db.Find(products); result.Error != nil {
+	if result := p.db.Find(&products); result.Error != nil {
 		return nil, result.Error
 	}
 	return products, nil

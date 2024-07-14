@@ -20,7 +20,6 @@ func NewGorm() *gorm.DB {
 	}
 	config := configs.NewMySQLConfig()
 	var err error
-
 	if db, err = gorm.Open(mysql.Open(config.FormatDSN()), &gorm.Config{}); err != nil {
 		log.Fatalln(err)
 	}

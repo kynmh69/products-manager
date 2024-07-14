@@ -7,7 +7,11 @@ require (
 	gorm.io/gorm v1.25.10
 )
 
-require filippo.io/edwards25519 v1.1.0 // indirect
+require (
+	filippo.io/edwards25519 v1.1.0 // indirect
+	go.uber.org/multierr v1.11.0 // indirect
+	go.uber.org/zap v1.27.0 // indirect
+)
 
 require (
 	github.com/bytedance/sonic v1.11.9 // indirect
